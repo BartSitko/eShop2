@@ -1,9 +1,10 @@
 ﻿using eShop.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace eShop.Data
 {
-    public class AppDbContext: DbContext
+    public class AppDbContext: IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {         
@@ -31,5 +32,9 @@ namespace eShop.Data
         public DbSet<Accesories> Accesories { get; set; }
 
 
+        //Zamowienia
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set;}
     }
 }

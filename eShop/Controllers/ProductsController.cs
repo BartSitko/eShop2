@@ -1,10 +1,13 @@
 ﻿using eShop.Data;
 using eShop.Data.Services;
+using eShop.Data.Static;
 using eShop.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eShop.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class ProductsController : Controller
     {
         private readonly IProductsService _service;
@@ -13,6 +16,8 @@ namespace eShop.Controllers
         {
             _service = service;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var data = await _service.GetAllAsync();
@@ -35,11 +40,12 @@ namespace eShop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var productDetails = await _service.GetByIdAsync(id);
 
-            if(productDetails ==  null) return View("Empty");
+            if(productDetails ==  null) return View("NotFound");
             return View(productDetails);
         }
 
@@ -47,7 +53,7 @@ namespace eShop.Controllers
         {
             var productDetails = await _service.GetByIdAsync(id);
 
-            if (productDetails == null) return View("Empty");
+            if (productDetails == null) return View("NotFound");
             return View(productDetails);
         }
 
@@ -59,6 +65,26 @@ namespace eShop.Controllers
                 return View(product);
             }
             await _service.UpdateAsync(id, product);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var productDetails = await _service.GetByIdAsync(id);
+
+            if (productDetails == null) return View("NotFound");
+            return View(productDetails);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var productDetails = await _service.GetByIdAsync(id);
+
+            if (productDetails == null) return View("NotFound");
+            
+
+            await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

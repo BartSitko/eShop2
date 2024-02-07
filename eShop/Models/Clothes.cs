@@ -1,10 +1,11 @@
-﻿using eShop.Data.Enums;
+﻿using eShop.Data.Base;
+using eShop.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eShop.Models
 {
-    public class Clothes
+    public class Clothes: IEntityBase
     {
         [Key]
         public int Id { get; set; }

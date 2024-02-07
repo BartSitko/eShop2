@@ -1,0 +1,103 @@
+﻿@model NewClothesVM
+
+@{
+    ViewData["Title"] = "Create a new Product";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Create a new Product</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name" class ="control-label"></label>
+                                <input asp-for="Name" class="control-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="StartDate" class="control-label"></label>
+                                <input asp-for="StartDate" type="date" class="control-control" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EndDate" class="control-label"></label>
+                                <input asp-for="EndDate" type="date" class="control-control" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Price" class="control-label"></label>
+                                <input asp-for="Price" type="number" class="control-control" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ImageURL" class="control-label"></label>
+                                <input asp-for="ImageURL" class="control-control" />
+                                <span asp-validation-for="ImageURL" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="MarkId" class="control-label"></label>
+                                <select asp-for="MarkId" class="form-control" asp-items="ViewBag.Marks"></select>
+                                <span asp-validation-for="MarkId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProductCategory" class="control-label"></label>
+                                <select asp-for="ProductCategory" class="form-control"></select>
+                                <span asp-validation-for="ProductCategory" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AccesoriesId" class="control-label"></label>
+                                <select asp-for="AccesoriesId" class="control-control" asp-items="ViewBag.Accesories"></select>
+                                <span asp-validation-for="AccesoriesId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProductIds" class="control-label"></label>
+                                <select asp-for="ProductIds" class="control-control" asp-items="ViewBag.Products" multiple></select>
+                                <span asp-validation-for="ProductIds" class="text-danger"></span>
+                            </div>
+                            
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <textarea asp-for="Description" class="control-control"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 offset-4 text-center">
+                        <img width="100%" id="ImageURLPreveiw"
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outlie-secondary" asp-action="Index">Show All</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $("#ImageURL").on("change", function () {
+            var output = document.getElementById("ImageURLPreveiw");
+            output.src = $(this).val();
+        })
+    </script>
+}
